@@ -123,7 +123,7 @@ function listar(event) {
         redirect: "follow"
     };
 
-    fetch(`https://tu-backend.com/api/estudiantes?tipoId=${tipoId}&id=${id}`, requestOptions)
+    fetch(`https:/tu-backend.com/api/estudiantes?tipoId=${tipoId}&id=${id}`, requestOptions)
         .then((response) => response.text())
         .then((result) => cargar(result))
         .catch((error) => console.error(error));
