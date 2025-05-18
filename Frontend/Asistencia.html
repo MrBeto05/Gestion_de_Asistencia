@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Asistencia</title>
+    <link rel="stylesheet" href="./estilo.css">
+</head>
+<body>
+<a href="../index.html" class="btn-regresar"><img src="./imagenes/hogar.png"></a>
+<form action="#" method="post">
+    <main class="container">
+        <h1>Gestión de Asistencia</h1>
+
+        <section class="container">
+            <h2>Crear Lista de Asistencia</h2>
+            <div class="form-group">
+                <label for="asigCodigo">Código de asignatura:</label>
+                <input type="text" id="asigCodigo" name="asigCodigo" placeholder="Ej. MAT101">
+            </div>
+            <div class="form-group">
+                <label for="asigGrupo">Grupo:</label>
+                <input type="text" id="asigGrupo" name="asigGrupo" placeholder="Ej. 01">
+            </div>
+            <div class="form-group">
+                <label for="asigSemestre">Semestre:</label>
+                <input type="text" id="asigSemestre" name="asigSemestre" placeholder="Ej. 2023-1">
+            </div>
+            <div class="form-group">
+                <label for="fechaAsistencia">Fecha (aaaa/mm/dd):</label>
+                <input type="text" id="fechaAsistencia" name="fechaAsistencia" placeholder="Ej. 2023/08/15">
+            </div>
+            <div class="form-group">
+                <label for="horaInicio">Hora inicio:</label>
+                <input type="text" id="horaInicio" name="horaInicio" placeholder="Ej. 08:00">
+            </div>
+            <div class="form-group">
+                <label for="horaFin">Hora fin:</label>
+                <input type="text" id="horaFin" name="horaFin" placeholder="Ej. 10:00">
+            </div>
+            <button type="submit">Crear Lista</button>
+        </section>
+
+        <section class="container">
+            <h2>Llenar Asistencia</h2>
+            <div class="form-group">
+                <label for="llenarCodigo">Código de asignatura:</label>
+                <input type="text" id="llenarCodigo" name="llenarCodigo" placeholder="Ej. MAT101">
+            </div>
+            <div class="form-group">
+                <label for="llenarGrupo">Grupo:</label>
+                <input type="text" id="llenarGrupo" name="llenarGrupo" placeholder="Ej. 01">
+            </div>
+            <div class="form-group">
+                <label for="llenarSemestre">Semestre:</label>
+                <input type="text" id="llenarSemestre" name="llenarSemestre" placeholder="Ej. 2023-1">
+            </div>
+            <div class="form-group">
+                <label for="llenarFecha">Fecha (aaaa/mm/dd):</label>
+                <input type="text" id="llenarFecha" name="llenarFecha" placeholder="Ej. 2023/08/15">
+            </div>
+            <div class="form-group">
+                <label for="llenarHoraIni">Hora inicio:</label>
+                <input type="text" id="llenarHoraIni" name="llenarHoraIni" placeholder="Ej. 08:00">
+            </div>
+            <div class="form-group">
+                <label for="llenarHoraFin">Hora fin:</label>
+                <input type="text" id="llenarHoraFin" name="llenarHoraFin" placeholder="Ej. 10:00">
+            </div>
+            <button type="submit">Llenar Asistencia</button>
+        </section>
+
+        <section class="container">
+            <h2>Modificar Asistencia</h2>
+            <div class="form-group">
+                <label for="modCodigoAsig">Código de asignatura:</label>
+                <input type="text" id="modCodigoAsig" name="modCodigoAsig" placeholder="Ej. MAT101">
+            </div>
+            <div class="form-group">
+                <label for="modGrupoAsig">Grupo:</label>
+                <input type="text" id="modGrupoAsig" name="modGrupoAsig" placeholder="Ej. 01">
+            </div>
+            <div class="form-group">
+                <label for="modSemestreAsig">Semestre:</label>
+                <input type="text" id="modSemestreAsig" name="modSemestreAsig" placeholder="Ej. 2023-1">
+            </div>
+            <div class="form-group">
+                <label for="modFechaAsig">Fecha (aaaa/mm/dd):</label>
+                <input type="text" id="modFechaAsig" name="modFechaAsig" placeholder="Ej. 2023/08/15">
+            </div>
+            <div class="form-group">
+                <label for="modHoraIniAsig">Hora inicio:</label>
+                <input type="text" id="modHoraIniAsig" name="modHoraIniAsig" placeholder="Ej. 08:00">
+            </div>
+            <div class="form-group">
+                <label for="modHoraFinAsig">Hora fin:</label>
+                <input type="text" id="modHoraFinAsig" name="modHoraFinAsig" placeholder="Ej. 10:00">
+            </div>
+            <div class="form-group">
+                <label for="modTipoDoc">Tipo de documento:</label>
+                <select id="modTipoDoc" required>
+                    <option value="" disabled selected>--Seleccione--</option>
+                    <option value="CC">CC</option>
+                    <option value="TI">TI</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="modNumDoc">Número de documento:</label>
+                <input type="text" id="modNumDoc" name="modNumDoc" placeholder="Ej. 123456789">
+            </div>
+            <div class="form-group">
+                <label for="modEstado">Nuevo estado:</label>
+                <select id="modEstado" required>
+                    <option value="" disabled selected>--Seleccione--</option>
+                    <option value="0">Asistió</option>
+                    <option value="1">Tarde</option>
+                    <option value="2">Ausente</option>
+                </select>
+            </div>
+            <button type="submit">Modificar</button>
+        </section>
+
+        <section class="container">
+            <h2>Mostrar Asistencia</h2>
+            <div class="form-group">
+                <label for="mostrarCodigo">Código de asignatura:</label>
+                <input type="text" id="mostrarCodigo" name="mostrarCodigo" placeholder="Ej. MAT101">
+            </div>
+            <div class="form-group">
+                <label for="mostrarGrupo">Grupo:</label>
+                <input type="text" id="mostrarGrupo" name="mostrarGrupo" placeholder="Ej. 01">
+            </div>
+            <div class="form-group">
+                <label for="mostrarSemestre">Semestre:</label>
+                <input type="text" id="mostrarSemestre" name="mostrarSemestre" placeholder="Ej. 2023-1">
+            </div>
+            <div class="form-group">
+                <label for="mostrarFecha">Fecha (aaaa/mm/dd):</label>
+                <input type="text" id="mostrarFecha" name="mostrarFecha" placeholder="Ej. 2023/08/15">
+            </div>
+            <div class="form-group">
+                <label for="mostrarHoraIni">Hora inicio:</label>
+                <input type="text" id="mostrarHoraIni" name="mostrarHoraIni" placeholder="Ej. 08:00">
+            </div>
+            <div class="form-group">
+                <label for="mostrarHoraFin">Hora fin:</label>
+                <input type="text" id="mostrarHoraFin" name="mostrarHoraFin" placeholder="Ej. 10:00">
+            </div>
+            <button type="submit">Mostrar</button>
+        </section>
+    </main>
+</form>
+</body>
+</html>

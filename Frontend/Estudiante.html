@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>G. Estudiantes</title>
+    <link rel="stylesheet" href="./estilo.css">
+</head>
+<body>
+    <a href="../index.html" class="btn-regresar"><img src="./imagenes/hogar.png"></a>
+    <form action="#" method="post">
+        <main class="container">
+            <h1>Gestión de Estudiantes</h1>
+            <section class="container">
+                <h2>Registrar Estudiante en Departamento</h2>
+                <div class="form-group">
+                    <h4><label for="nuevoID">Ingrese ID del nuevo estudiante:</label></h4>
+                    <input type="text" id="nuevoID" name="nuevoID" placeholder="1234">
+                </div>
+
+                <div class="form-group">
+                    <h4><label for="tiposid">Ingrese el Tipo de ID del nuevo estudiante:</label></h4>
+                    <select id="tiposid" required>
+                        <option value="" disabled selected>--Seleccione una Opción--</option>
+                        <option value="CC">CC</option>
+                        <option value="TI">TI</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <h4><label for="nuevoNom">Ingrese el Nombre Completo del nuevo estudiante:</label></h4>
+                    <input type="text" id="nuevoNom" name="nuevoNom" placeholder="Andres Ramirez">
+                </div>
+                <button type="submit">Registrar</button>
+            </section>
+
+            <section class="container">
+                <h2>Consultar estudiante en Departamento</h2>
+                <div class="form-group">
+                    <h4><label for="nid">Ingrese ID del estudiante a consultar:</label></h4>
+                    <input type="text" id="nid" name="nid" placeholder="1234">
+                </div>
+
+                <div class="form-group">
+                    <h4><label for="tid">Ingrese el Tipo de ID del estudiante a consultar:</label></h4>
+                    <select id="tid" required>
+                        <option value="" disabled selected>--Seleccione una Opción--</option>
+                        <option value="CC">CC</option>
+                        <option value="TI">TI</option>
+                    </select>
+                </div>
+                <button type="submit">Consultar</button>
+            </section>
+
+            <section class="container">
+                <h2>Modificar estudiante en Departamento</h2>
+                <div class="form-group">
+                    <h4><label for="atid">Ingrese el Tipo de ID del estudiante a modificar:</label></h4>
+                    <select id="atid" required>
+                        <option value="" disabled selected>--Seleccione una Opción--</option>
+                        <option value="CC">CC</option>
+                        <option value="TI">TI</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <h4><label for="mid">Ingrese ID del estudiante a modificar:</label></h4>
+                    <input type="text" id="mid" name="mid" placeholder="1234">
+                </div>
+                <div class="form-group">
+                    <h4><label for="ntid">Ingrese el nuevo Tipo de ID del estudiante:</label></h4>
+                    <select id="ntid" required>
+                        <option value="" disabled selected>--Seleccione una Opción--</option>
+                        <option value="CC">CC</option>
+                        <option value="TI">TI</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <h4><label for="Nommod">Ingrese los nuevos Nombres Completos:</label></h4>
+                    <input type="text" id="Nommod" name="Nommod" placeholder="Andres Ramirez">
+                </div>
+                <button type="submit">Modificar</button>
+            </section>
+
+        </main>
+    </form>
+</body>
+</html>
