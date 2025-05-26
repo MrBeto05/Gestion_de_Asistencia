@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const asignaturaController = require("../controllers/asignaturacontroller.js");
+const asignaturaController = require("../controllers/asignaturacontroller");
 
 router.get("/", asignaturaController.consultar);
 router.post("/", asignaturaController.ingresar);
