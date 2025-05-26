@@ -24,7 +24,6 @@ function editarDep() {
   });
 }
 
-//esto
 function consultarDep() {
   fetch('/.netlify/functions/departamento')
     .then(res => {
@@ -34,7 +33,6 @@ function consultarDep() {
       return res.json();
     })
     .then(data => {
-      // Cargar el nombre actual directamente en el input
       document.getElementById("nombre").value = data.nombre;
     })
     .catch(err => {
@@ -66,4 +64,3 @@ function consultarEstudiantePorId() {
     alert("Estudiante no encontrado en la facultad.");
   }
 }
-
