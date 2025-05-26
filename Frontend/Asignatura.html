@@ -7,7 +7,7 @@
 </head>
 <body>
 <a href="../index.html" class="btn-regresar"><img src="./imagenes/hogar.png"></a>
-<form method="post">
+<form action="#" method="post">
     <main class="container">
         <h1>Gestión de Asignaturas</h1>
 
@@ -18,12 +18,12 @@
                 <input type="text" id="nombreAsig" name="nombreAsig" placeholder="Ej. Cálculo Diferencial">
             </div>
             <div class="form-group">
-                <label for="codAsigEdit">Código:</label>
-                <input type="text" id="codAsigEdit" name="modCodigo" placeholder="Ej. MAT101">
+                <label for="codigoAsig">Código:</label>
+                <input type="text" id="codigoAsig" name="modCodigo" placeholder="Ej. MAT101">
             </div>
             <div class="form-group">
-                <label for="grupoAsigEdit">Grupo/Sección:</label>
-                <input type="text" id="grupoAsigEdit" name="modGrupo" placeholder="Ej. 01">
+                <label for="grupoAsig">Grupo/Sección:</label>
+                <input type="text" id="grupoAsig" name="modGrupo" placeholder="Ej. 01">
             </div>
             <div class="form-group">
                 <label for="semestreAsig">Semestre:</label>
@@ -39,41 +39,44 @@
         <section class="container">
             <h2>Consultar Asignatura</h2>
             <div class="form-group">
-                <label for="consultaCodigo">Código:</label>
-                <input type="text" id="consultaCodigo" name="consultaCodigo" placeholder="Ej. MAT101">
+                <label for="codigoAsigBuscar">Código:</label>
+                <input type="text" id="codigoAsigBuscar" name="consultaCodigo" placeholder="Ej. MAT101">
             </div>
             <div class="form-group">
-                <label for="consultaGrupo">Grupo/Sección:</label>
-                <input type="text" id="consultaGrupo" name="consultaGrupo" placeholder="Ej. 01">
+                <label for="grupoAsigBuscar">Grupo/Sección:</label>
+                <input type="text" id="grupoAsigBuscar" name="consultaGrupo" placeholder="Ej. 01">
             </div>
             <div class="form-group">
-                <label for="consultaSemestre">Semestre:</label>
-                <input type="text" id="consultaSemestre" name="consultaSemestre" placeholder="Ej. 2023-1">
+                <label for="semestreAsigBuscar">Semestre:</label>
+                <input type="text" id="semestreAsigBuscar" name="consultaSemestre" placeholder="Ej. 2023-1">
             </div>
-            <button type="submit">Consultar</button>
+            <button type="button" onclick="consultarAsignatura()">Consultar</button>
+            <div class="form-group">
+                <p id="infoAsig"></p>
+            </div>
         </section>
 
         <section class="container">
             <h2>Modificar Asignatura</h2>
             <div class="form-group">
-                <label for="modCodigo">Código actual:</label>
-                <input type="text" id="modCodigo" name="modCodigo" placeholder="Ej. MAT101">
+                <label for="codAsigEdit">Código actual:</label>
+                <input type="text" id="codAsigEdit" name="modCodigo" placeholder="Ej. MAT101">
             </div>
             <div class="form-group">
-                <label for="modGrupo">Grupo actual:</label>
-                <input type="text" id="modGrupo" name="modGrupo" placeholder="Ej. 01">
+                <label for="grupoAsigEdit">Grupo actual:</label>
+                <input type="text" id="grupoAsigEdit" name="modGrupo" placeholder="Ej. 01">
             </div>
             <div class="form-group">
-                <label for="modSemestre">Semestre actual:</label>
-                <input type="text" id="modSemestre" name="modSemestre" placeholder="Ej. 2023-1">
+                <label for="semestreAsigEdit">Semestre actual:</label>
+                <input type="text" id="semestreAsigEdit" name="modSemestre" placeholder="Ej. 2023-1">
             </div>
             <div class="form-group">
-                <label for="nuevoNombre">Nuevo nombre:</label>
-                <input type="text" id="nuevoNombre" name="nuevoNombre" placeholder="Nuevo nombre">
+                <label for="nuevoNombreAsig">Nuevo nombre:</label>
+                <input type="text" id="nuevoNombreAsig" name="nuevoNombre" placeholder="Nuevo nombre">
             </div>
             <div class="form-group">
-                <label for="nuevosCreditos">Nuevos créditos:</label>
-                <input type="number" id="nuevosCreditos" name="nuevosCreditos" placeholder="Nuevos créditos">
+                <label for="nuevosCreditosAsig">Nuevos créditos:</label>
+                <input type="number" id="nuevosCreditosAsig" name="nuevosCreditos" placeholder="Nuevos créditos">
             </div>
             <button type="button" onclick="modificarAsignatura()">Modificar</button>
         </section>
@@ -104,9 +107,10 @@
                 <label for="estGrupo">Grupo:</label>
                 <input type="text" id="estGrupo" name="estGrupo" placeholder="Ej. 01">
             </div>
-            <button type="submit">Registrar</button>
+            <button type="button">Registrar</button>
         </section>
     </main>
 </form>
+<script src="asignatura.js"></script>
 </body>
 </html>
