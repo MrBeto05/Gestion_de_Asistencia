@@ -7,7 +7,7 @@
 </head>
 <body>
 <a href="../index.html" class="btn-regresar"><img src="./imagenes/hogar.png"></a>
-<form method="post">
+<form action="#" method="post">
     <main class="container">
         <h1>Gestión de Asistencia</h1>
 
@@ -37,7 +37,7 @@
                 <label for="horaFin">Hora fin:</label>
                 <input type="text" id="horaFin" name="horaFin" placeholder="Ej. 10:00">
             </div>
-            <button type="submit">Crear Lista</button>
+            <button type="button" onclick="crearLista(event)">Crear Lista</button>
         </section>
 
         <section class="container">
@@ -66,7 +66,7 @@
                 <label for="llenarHoraFin">Hora fin:</label>
                 <input type="text" id="llenarHoraFin" name="llenarHoraFin" placeholder="Ej. 10:00">
             </div>
-            <button type="submit">Llenar Asistencia</button>
+            <button type="button" onclick="buscarLista(event)">Llenar Asistencia</button>
         </section>
 
         <section class="container">
@@ -116,7 +116,7 @@
                     <option value="2">Ausente</option>
                 </select>
             </div>
-            <button type="submit">Modificar</button>
+            <button type="button" onclick="modificarAsistencia(event)">Modificar</button>
         </section>
 
         <section class="container">
@@ -145,9 +145,10 @@
                 <label for="mostrarHoraFin">Hora fin:</label>
                 <input type="text" id="mostrarHoraFin" name="mostrarHoraFin" placeholder="Ej. 10:00">
             </div>
-            <button type="submit">Mostrar</button>
+            <button type="button" onclick="consultarAsistencia(event)">Mostrar</button>
         </section>
     </main>
 </form>
+<script src="asistencia.js"></script>
 </body>
 </html>

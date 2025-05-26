@@ -28,18 +28,39 @@ function guardarEst() {
   mostrarEstudiantes();
 }
 
+// Función para consultar estudiante
+function consultarEstudiante() {
+  const numeroId = document.getElementById("numeroIdConsultar").value.trim();
+  const tipoId = document.getElementById("tipoIdConsultar").value.trim();
+
+  if (!numeroId || !tipoId) {
+    alert("Por favor, llena todos los campos para consultar.");
+    return;
+  }
+
+  const estudiante = estudiantes.find(est =>
+    est.numeroId === numeroId && est.tipoId === tipoId
+  );
+
+  if (estudiante) {
+    alert(`Estudiante encontrado:\nNombres: ${estudiante.nombres}\nTipo ID: ${estudiante.tipoId}\nNúmero ID: ${estudiante.numeroId}`);
+  } else {
+    alert("Estudiante no encontrado.");
+  }
+}
+
 // Función para editar estudiante existente
 function editarEst() {
-  const numeroIdBuscar = document.getElementById("numeroIdEditar").value.trim();
-  const nuevosNombres = document.getElementById("nuevosNombresEditar").value.trim();
-  const nuevoTipoId = document.getElementById("tipoIdEditar").value.trim();
+  const numeroId = document.getElementById("numeroIdModificar").value.trim();
+  const nuevosNombres = document.getElementById("nuevosNombres").value.trim();
+  const nuevoTipoId = document.getElementById("tipoIdModificar").value.trim();
 
-  if (!numeroIdBuscar || !nuevosNombres || !nuevoTipoId) {
+  if (!numeroId || !nuevosNombres || !nuevoTipoId) {
     alert("Por favor, llena todos los campos para modificar estudiante.");
     return;
   }
 
-  const index = estudiantes.findIndex(est => est.numeroId === numeroIdBuscar);
+  const index = estudiantes.findIndex(est => est.numeroId === numeroId);
 
   if (index === -1) {
     alert("Estudiante no encontrado para modificar.");
@@ -52,14 +73,14 @@ function editarEst() {
   alert("Estudiante modificado con éxito.");
 
   // Limpiar campos
-  document.getElementById("numeroIdEditar").value = "";
-  document.getElementById("nuevosNombresEditar").value = "";
-  document.getElementById("tipoIdEditar").value = "";
+  document.getElementById("numeroIdModificar").value = "";
+  document.getElementById("nuevosNombres").value = "";
+  document.getElementById("tipoIdModificar").value = "";
 
   mostrarEstudiantes();
 }
 
-// Función para mostrar estudiantes (solo para verificar)
+// Función para mostrar estudiantes
 function mostrarEstudiantes() {
   const parrafo = document.getElementById("parrafo");
   if (estudiantes.length === 0) {

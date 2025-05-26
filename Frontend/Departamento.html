@@ -10,7 +10,7 @@
     <h1>Gestion de Departamento</h1>
 </header>
 <a href="../index.html" class="btn-regresar"><img src="./imagenes/hogar.png"></a>
-<form  method="post">
+<form action="#" method="post">
     <main>
 
         <section class="section">
@@ -18,18 +18,18 @@
             <div class="info-box">
                 Nombre actual del departamento: <strong><label id="nomDep"></label></strong>
             </div>
-           <center><button type="submit">Consultar</button></center>
+            <center><button type="button" onclick="consultarDep()">Consultar</button></center>
         </section>
 
         <section class="section">
             <h2>Modificar Nombre del Departamento</h2>
-            <label for="nuevoNombre">Nuevo nombre del departamento:</label>
-            <input type="text" id="nuevoNombre" name="nuevoNombre" placeholder="Ej. Ciencias Exactas">
-            <button type="submit">Modificar</button>
+            <label for="nombre">Nuevo nombre del departamento:</label>
+            <input type="text" id="nombre" name="nuevoNombre" placeholder="Ej. Ciencias Exactas">
+            <button type="button" onclick="editarDep()">Modificar</button>
         </section>
 
     </main>
 </form>
-
+<script src="departamento.js"></script>
 </body>
 </html>
