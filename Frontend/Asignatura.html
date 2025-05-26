@@ -18,12 +18,12 @@
                 <input type="text" id="nombreAsig" name="nombreAsig" placeholder="Ej. Cálculo Diferencial">
             </div>
             <div class="form-group">
-                <label for="codigoAsig">Código:</label>
-                <input type="text" id="codigoAsig" name="codigoAsig" placeholder="Ej. MAT101">
+                <label for="codAsigEdit">Código:</label>
+                <input type="text" id="codAsigEdit" name="modCodigo" placeholder="Ej. MAT101">
             </div>
             <div class="form-group">
-                <label for="grupoAsig">Grupo/Sección:</label>
-                <input type="text" id="grupoAsig" name="grupoAsig" placeholder="Ej. 01">
+                <label for="grupoAsigEdit">Grupo/Sección:</label>
+                <input type="text" id="grupoAsigEdit" name="modGrupo" placeholder="Ej. 01">
             </div>
             <div class="form-group">
                 <label for="semestreAsig">Semestre:</label>
@@ -33,7 +33,7 @@
                 <label for="creditosAsig">Créditos:</label>
                 <input type="number" id="creditosAsig" name="creditosAsig" placeholder="Ej. 3">
             </div>
-            <button type="submit">Agregar Asignatura</button>
+            <button type="button" onclick="guardarAsignatura()">Agregar Asignatura</button>
         </section>
 
         <section class="container">
@@ -75,7 +75,7 @@
                 <label for="nuevosCreditos">Nuevos créditos:</label>
                 <input type="number" id="nuevosCreditos" name="nuevosCreditos" placeholder="Nuevos créditos">
             </div>
-            <button type="submit">Modificar</button>
+            <button type="button" onclick="modificarAsignatura()">Modificar</button>
         </section>
 
         <section class="container">
