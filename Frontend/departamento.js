@@ -25,7 +25,7 @@ function editarDep() {
 }
 
 function consultarDep() {
-  fetch('./netlify/functions/departamento')
+  fetch('/.netlify/functions/departamento')
     .then(res => {
       if (!res.ok) {
         throw new Error("No se pudo consultar el departamento");
