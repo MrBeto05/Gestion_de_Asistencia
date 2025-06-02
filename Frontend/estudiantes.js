@@ -81,7 +81,7 @@ function editarEst() {
 }
 
 // Función para mostrar estudiantes
-function mostrarEstudiantes() {
+/*function mostrarEstudiantes() {
   const parrafo = document.getElementById("parrafo");
   if (estudiantes.length === 0) {
     parrafo.innerText = "No hay estudiantes registrados.";
@@ -95,4 +95,4 @@ function mostrarEstudiantes() {
 }
 
 // Inicializar lista vacía al cargar
-mostrarEstudiantes();
+mostrarEstudiantes();*/

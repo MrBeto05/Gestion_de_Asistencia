@@ -1,44 +1,52 @@
-exports.consultar = async (req, res) => {
-    try {
-        const { codigo, fecha, horaInicio, grupo, semestre } = req.query;
-        // Lógica para consultar lista de asistencia
-        res.json({
-            estudiantes: [
-                { tipoDocumento: "CC", numeroDocumento: "123", estado: "Asistió" }
-            ]
-        });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+const { db, admin } = require("../databases/firebase");
+
+exports.crearLista = async (req, res) => {
+  try {
+    const { codigo, fecha, horaInicio, grupo, semestre } = req.body;
+
+    // Verificar si la lista ya existe
+    const snapshot = await db.collection("asistencias")
+      .where("codigo", "==", codigo)
+      .where("fecha", "==", fecha)
+      .where("horaInicio", "==", horaInicio)
+      .get();
+
+    if (!snapshot.empty) {
+      return res.status(409).json({ error: "La lista ya existe" });
     }
+
+    // Crear nueva lista
+    const docRef = await db.collection("asistencias").add({
+      codigo,
+      fecha,
+      horaInicio,
+      grupo,
+      semestre,
+      estudiantes: [],
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(201).json({ id: docRef.id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-exports.ingresar = async (req, res) => {
-    try {
-        const { codigo, fecha, horaInicio, grupo, semestre } = req.body;
-        // Lógica para crear una nueva lista de asistencia
-        res.status(201).send("Lista de asistencia creada exitosamente");
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-exports.llenar = async (req, res) => {
-    try {
-        const { codigo, fecha, horaInicio, estudiantes } = req.body;
-        // Lógica para registrar la asistencia
-        res.send("Asistencia registrada exitosamente");
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
+exports.registrarAsistencia = async (req, res) => {
+  try {
+    const { listaId, estudianteId, presente } = req.body;
 
-exports.modificar = async (req, res) => {
-    try {
-        const { codigo, fecha, horaInicio, estudiantes } = req.body;
-        // Lógica para modificar la asistencia
-        res.send("Asistencia modificada exitosamente");
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
+    // Actualizar la lista de asistencia
+    await db.collection("asistencias").doc(listaId).update({
+      estudiantes: admin.firestore.FieldValue.arrayUnion({
+        estudianteId,
+        presente,
+        fechaRegistro: new Date().toISOString(),
+      }),
+    });
 
-//hola
+    res.status(200).json({ mensaje: "Asistencia registrada" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

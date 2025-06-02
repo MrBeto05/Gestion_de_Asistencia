@@ -1,48 +1,50 @@
-let estudiantes = [];
+const { db, admin } = require("../databases/firebase");
 
-function guardarEstudiante(req, res) {
-  const { nombres, tipoId, numeroId } = req.body;
+exports.guardarEstudiante = async (req, res) => {
+  try {
+    const { nombres, tipoId, numeroId } = req.body;
 
-  if (!nombres || !tipoId || !numeroId) {
-    return res.status(400).json({ mensaje: "Faltan campos obligatorios" });
+    if (!nombres || !tipoId || !numeroId) {
+      return res.status(400).json({ error: "Faltan campos obligatorios" });
+    }
+
+    // Verificar si el estudiante ya existe
+    const snapshot = await db.collection("estudiantes")
+      .where("numeroId", "==", numeroId)
+      .get();
+
+    if (!snapshot.empty) {
+      return res.status(409).json({ error: "El estudiante ya existe" });
+    }
+
+    // Crear nuevo estudiante
+    const docRef = await db.collection("estudiantes").add({
+      nombres,
+      tipoId,
+      numeroId,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(201).json({ id: docRef.id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
+};
 
-  const existe = estudiantes.find(est => est.numeroId === numeroId);
-  if (existe) {
-    return res.status(409).json({ mensaje: "Ya existe un estudiante con ese número de ID" });
+exports.consultarEstudiante = async (req, res) => {
+  try {
+    const { numeroId } = req.query;
+    const snapshot = await db.collection("estudiantes")
+      .where("numeroId", "==", numeroId)
+      .get();
+
+    if (snapshot.empty) {
+      return res.status(404).json({ error: "Estudiante no encontrado" });
+    }
+
+    const estudiante = snapshot.docs[0].data();
+    res.status(200).json({ ...estudiante, id: snapshot.docs[0].id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  estudiantes.push({ nombres, tipoId, numeroId });
-  return res.status(200).json({ mensaje: "Estudiante guardado con éxito" });
-}
-
-function editarEstudiante(req, res) {
-  const { numeroId, nombres, tipoId } = req.body;
-
-  const estudiante = estudiantes.find(est => est.numeroId === numeroId);
-  if (!estudiante) {
-    return res.status(404).json({ mensaje: "Estudiante no encontrado" });
-  }
-
-  estudiante.nombres = nombres;
-  estudiante.tipoId = tipoId;
-
-  return res.status(200).json({ mensaje: "Estudiante modificado con éxito" });
-}
-
-function consultarEstudiante(req, res) {
-  const { numeroId } = req.query;
-
-  const estudiante = estudiantes.find(est => est.numeroId === numeroId);
-  if (!estudiante) {
-    return res.status(404).json({ mensaje: "Estudiante no encontrado" });
-  }
-
-  return res.status(200).json(estudiante);
-}
-
-module.exports = {
-  guardarEstudiante,
-  editarEstudiante,
-  consultarEstudiante
 };
