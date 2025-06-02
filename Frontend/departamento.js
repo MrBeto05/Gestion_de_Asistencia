@@ -6,11 +6,11 @@ function editarDep() {
     return;
   }
 
-  fetch('./netlify/functions/departamento', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre: nuevoDep }),
-  })
+  fetch('/.netlify/functions/departamento', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre: nuevoNombre })
+  });
   .then(res => {
     if (!res.ok) return res.text().then(text => { throw new Error(text) });
     return res.json();

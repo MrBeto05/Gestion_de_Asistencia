@@ -4,6 +4,6 @@ const departamentoRoutes = require("../../Backend/routes/departamentoroutes");
 
 const app = express();
 app.use(express.json());
-app.use("/departamento", departamentoRoutes);
+app.use('/.netlify/functions/departamento', router);
 
 exports.handler = serverless(app);
