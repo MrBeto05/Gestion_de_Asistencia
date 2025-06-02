@@ -15,27 +15,38 @@ exports.consultarDepartamento = async (req, res) => {
 
 exports.actualizarDepartamento = async (req, res) => {
   try {
-    const { nombre } = req.body; // Debe coincidir con el nombre enviado desde el frontend
+    // Debug: Imprime el cuerpo recibido
+    console.log("Cuerpo recibido:", req.body);
 
-    if (!nombre || typeof nombre !== 'string') {
-      return res.status(400).json({ error: "El campo 'nombre' es requerido y debe ser texto" });
+    if (!req.body || typeof req.body !== 'object') {
+      return res.status(400).json({ error: "Cuerpo de solicitud inválido" });
+    }
+
+    const { nombre } = req.body;
+
+    // Validación mejorada
+    if (typeof nombre !== 'string' || nombre.trim() === "") {
+      return res.status(400).json({
+        error: "El campo 'nombre' es requerido y debe ser texto no vacío",
+        received: req.body // Para debug
+      });
     }
 
     await db.collection("departamentos").doc("principal").set({
-      nombre,
+      nombre: nombre.trim(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp()
     }, { merge: true });
 
     return res.status(200).json({
       success: true,
-      mensaje: "Departamento actualizado correctamente",
-      data: { nombre }
+      mensaje: `Departamento actualizado a: ${nombre}`,
     });
+
   } catch (error) {
-    console.error("Error en actualizarDepartamento:", error);
+    console.error("Error en controlador:", error);
     return res.status(500).json({
-      success: false,
-      error: error.message
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 };

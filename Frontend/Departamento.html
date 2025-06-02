@@ -24,7 +24,7 @@
         <section class="section">
             <h2>Modificar Nombre del Departamento</h2>
             <label for="nombre">Nuevo nombre del departamento:</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ej. Universidad X">
+            <input type="text" id="nombre" name="nombre" placeholder="Ej. Universidad X" required oninput="this.value = this.value.trim()">
             <button type="button" onclick="editarDep()">Modificar</button>
         </section>
 
