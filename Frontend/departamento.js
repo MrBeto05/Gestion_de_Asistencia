@@ -1,27 +1,19 @@
 function editarDep() {
-  const nuevoDep = document.getElementById("nombre").value;
+  const nuevoNombre = document.getElementById("nombre").value.trim(); // Usa const y asegura trim()
 
-  if (!nuevoDep || nuevoDep.trim() === "") {
-    alert("Ingrese un departamento");
+  if (!nuevoNombre) {
+    alert("Ingrese un nombre válido");
     return;
   }
 
   fetch('/.netlify/functions/departamento', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre: nuevoDep }) // Cambiado de nuevoNombre a nuevoDep
-  }) // <-- Se había un punto y coma mal colocado aquí
-  .then(res => {
-    if (!res.ok) return res.text().then(text => { throw new Error(text) });
-    return res.json();
+    body: JSON.stringify({ nombre: nuevoNombre }) // Asegúrate de que la clave sea "nombre"
   })
-  .then(data => {
-    alert(data.mensaje || "Departamento actualizado"); // Mensaje por defecto
-  })
-  .catch(err => {
-    alert("Error al actualizar: " + err.message);
-    console.error(err);
-  });
+  .then(res => res.json())
+  .then(data => alert(data.mensaje))
+  .catch(err => alert("Error: " + err.message));
 }
 
 function consultarDep() {
