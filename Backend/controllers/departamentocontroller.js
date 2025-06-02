@@ -18,19 +18,26 @@ exports.actualizarDepartamento = async (req, res) => {
     const { nombre } = req.body;
 
     if (!nombre) {
-      return res.status(400).json({ error: "El campo 'nombre' es requerido" });
+      return res.status(400).json({ error: "Nombre es requerido" }); // Mensaje más claro
     }
 
-    await db.collection("departamentos").doc("principal").set(
-      {
-        nombre,
-        updatedAt: admin.firestore.FieldValue.serverTimestamp()
-      },
-      { merge: true, ignoreUndefinedProperties: true } // ¡Clave para ignorar undefined!
-    );
+    await db.collection("departamentos").doc("principal").set({
+      nombre,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    });
 
-    res.status(200).json({ mensaje: "Departamento actualizado" });
+    // Asegúrate de devolver siempre un JSON válido
+    return res.status(200).json({
+      success: true,
+      mensaje: "Departamento actualizado correctamente",
+      data: { nombre }
+    });
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error en actualizarDepartamento:", error);
+    return res.status(500).json({
+      success: false,
+      error: error.message
+    });
   }
 };

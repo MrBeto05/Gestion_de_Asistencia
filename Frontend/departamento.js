@@ -1,19 +1,36 @@
 function editarDep() {
-  const nuevoNombre = document.getElementById("nombre").value.trim(); // Usa const y asegura trim()
+  const nombreInput = document.getElementById("nombre");
+  const nuevoNombre = nombreInput ? nombreInput.value.trim() : null;
 
   if (!nuevoNombre) {
-    alert("Ingrese un nombre válido");
+    alert("Por favor ingrese un nombre válido");
     return;
   }
 
   fetch('/.netlify/functions/departamento', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre: nuevoNombre }) // Asegúrate de que la clave sea "nombre"
+    body: JSON.stringify({ nombre: nuevoNombre })
   })
-  .then(res => res.json())
-  .then(data => alert(data.mensaje))
-  .catch(err => alert("Error: " + err.message));
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(err => { throw new Error(err.error || "Error desconocido") });
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data && data.success) {
+      alert(data.mensaje);
+      // Opcional: Actualizar la UI
+      if (nombreInput) nombreInput.value = data.data.nombre;
+    } else {
+      throw new Error(data.error || "Respuesta inválida del servidor");
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("Error: " + error.message);
+  });
 }
 
 function consultarDep() {
