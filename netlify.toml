@@ -1,7 +1,6 @@
 [build]
-command = "npm install" # Opcional: Solo si necesitas instalar dependencias
 functions = "netlify/functions" # Ruta a tus funciones
-publish = "Frontend" # Carpeta donde está tu frontend
+publish = "." # Carpeta donde está tu frontend
 
 [[redirects]]
 from = "/*"
