@@ -1,36 +1,59 @@
-const API_BASE = '/.netlify/functions/departamento';
+const API_URL = '/.netlify/functions/departamento';
 
-function editarDep() {
-  const input = document.getElementById("nombre");
-  const nombre = input.value.trim();
+async function handleRequest(url, options = {}) {
+  try {
+    const response = await fetch(url, {
+      headers: { 'Content-Type': 'application/json' },
+      ...options
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Error del servidor');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+    throw error;
+  }
+}
+
+export function consultarDep() {
+  return handleRequest(API_URL)
+    .then(data => {
+      document.getElementById("nomDep").textContent = data.nombre || "No definido";
+      document.getElementById("nombre").value = data.nombre || "";
+    })
+    .catch(err => {
+      alert("Error al consultar: " + err.message);
+    });
+}
+
+export function editarDep() {
+  const nombre = document.getElementById("nombre").value.trim();
 
   if (!nombre) {
     alert("Por favor ingrese un nombre válido");
-    return;
+    return Promise.resolve();
   }
 
-  fetch(API_BASE, {
+  return handleRequest(API_URL, {
     method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({ nombre: nombre })
-  })
-  .then(async response => {
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.error || "Error del servidor");
-    }
-    return data;
+    body: JSON.stringify({ nombre })
   })
   .then(data => {
-    alert(data.mensaje || "Departamento actualizado correctamente");
-    document.getElementById("nomDep").textContent = data.nombre;
-    input.value = "";
+    alert(data.mensaje || "Actualización exitosa");
+    return consultarDep(); // Refrescar los datos
   })
   .catch(err => {
-    console.error("Error completo:", err);
-    alert(`Error: ${err.message}`);
+    alert("Error al actualizar: " + err.message);
   });
 }
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('consultarBtn')?.addEventListener('click', consultarDep);
+  document.getElementById('editarBtn')?.addEventListener('click', editarDep);
+  consultarDep(); // Carga inicial
+});

@@ -1,11 +1,12 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   consultarDepartamento,
-  actualizarDepartamento,
-} = require("../controllers/departamentocontroller");
+  actualizarDepartamento
+} = require('../controllers/departamentocontroller');
 
-router.get("/", consultarDepartamento);
-router.post("/", actualizarDepartamento);
+// Rutas bien definidas con funciones de controlador
+router.get('/', (req, res) => consultarDepartamento(req, res));
+router.post('/', (req, res) => actualizarDepartamento(req, res));
 
 module.exports = router;
