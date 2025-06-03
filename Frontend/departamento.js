@@ -1,4 +1,3 @@
-// URL base para todas las solicitudes
 const API_BASE = '/.netlify/functions/departamento';
 
 function editarDep() {
@@ -12,20 +11,22 @@ function editarDep() {
 
   fetch(API_BASE, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre })
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({ nombre: nombre })
   })
-  .then(response => {
+  .then(async response => {
+    const data = await response.json();
     if (!response.ok) {
-      return response.text().then(text => {
-        throw new Error(text || 'Error del servidor');
-      });
+      throw new Error(data.error || "Error del servidor");
     }
-    return response.json();
+    return data;
   })
   .then(data => {
     alert(data.mensaje || "Departamento actualizado correctamente");
-    document.getElementById("nomDep").textContent = nombre;
+    document.getElementById("nomDep").textContent = data.nombre;
     input.value = "";
   })
   .catch(err => {
@@ -33,27 +34,3 @@ function editarDep() {
     alert(`Error: ${err.message}`);
   });
 }
-
-function consultarDep() {
-  fetch(API_BASE)
-    .then(response => {
-      if (!response.ok) {
-        return response.text().then(text => {
-          throw new Error(text || 'Error al consultar');
-        });
-      }
-      return response.json();
-    })
-    .then(data => {
-      document.getElementById("nomDep").textContent = data.nombre || "No definido";
-      document.getElementById("nombre").value = data.nombre || "";
-    })
-    .catch(err => {
-      console.error("Error en consulta:", err);
-      document.getElementById("nomDep").textContent = "Error al cargar";
-      alert("Error al consultar: " + err.message);
-    });
-}
-
-// Consultar automáticamente al cargar la página
-document.addEventListener('DOMContentLoaded', consultarDep);
