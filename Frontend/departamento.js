@@ -1,40 +1,33 @@
 function editarDep() {
-  const inputElement = document.getElementById("nombre");
-  if (!inputElement) {
-    alert("Error: No se encontró el campo de nombre");
+  const input = document.getElementById("nombre");
+  if (!input) {
+    alert("Error: Campo 'nombre' no encontrado en el HTML");
     return;
   }
 
-  const nuevoNombre = inputElement.value.trim();
-  if (!nuevoNombre) {
+  const nombre = input.value.trim();
+  if (!nombre) {
     alert("Por favor ingrese un nombre válido");
     return;
   }
 
-  // Debug: Verifica el dato antes de enviarlo
-  console.log("Enviando:", { nombre: nuevoNombre });
-
   fetch('/.netlify/functions/departamento', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ nombre: nuevoNombre }) // Asegúrate que sea { nombre: valor }
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nombre }) // Asegúrate que sea { nombre: valor }
   })
-  .then(async (response) => {
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Error del servidor");
-    }
-    return response.json();
+  .then(async (res) => {
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Error del servidor");
+    return data;
   })
   .then(data => {
-    alert(data.mensaje || "Actualización exitosa");
-    inputElement.value = ""; // Limpia el campo
+    alert(data.mensaje);
+    input.value = ""; // Limpia el campo
   })
-  .catch(error => {
-    console.error("Error completo:", error);
-    alert(`Error: ${error.message}`);
+  .catch(err => {
+    console.error("Error completo:", err);
+    alert(`Error: ${err.message}`);
   });
 }
 
