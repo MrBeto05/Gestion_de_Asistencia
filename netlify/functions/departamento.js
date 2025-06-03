@@ -1,23 +1,30 @@
-const express = require('express');
-const serverless = require('serverless-http');
-const cors = require('cors');
-const departamentoRoutes = require('../../../Backend/routes/departamentoroutes');
+const express = require("express");
+const serverless = require("serverless-http");
+const cors = require("cors");
+const path = require("path");
+
+// Importa las rutas usando rutas absolutas para evitar problemas
+const departamentoRoutes = require(path.resolve(__dirname, "../../Backend/routes/departamentoroutes"));
 
 const app = express();
 
-// Middlewares esenciales
+// Configuración básica
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Ruta base para la función Lambda
-app.use('/.netlify/functions/departamento', departamentoRoutes);
+// Usa las rutas
+app.use("/.netlify/functions/departamento", departamentoRoutes);
+
+// Ruta de prueba
+app.get("/.netlify/functions/departamento/test", (req, res) => {
+  res.json({ message: "Ruta de prueba funcionando" });
+});
 
 // Manejador de errores
 app.use((err, req, res, next) => {
-  console.error('Error:', err.stack);
-  res.status(500).json({ error: 'Error interno del servidor' });
+  console.error(err.stack);
+  res.status(500).json({ error: "Algo salió mal!" });
 });
 
-// Exportación para Netlify Functions
-module.exports.handler = serverless(app);
+exports.handler = serverless(app);
