@@ -1,7 +1,7 @@
 [build]
 command = "npm install"
 functions = "netlify/functions"
-publish = "Frontend"  # Asegúrate que apunta a tu carpeta frontend
+publish = "."  # Asegúrate que apunta a tu carpeta frontend
 
 [[redirects]]
 from = "/api/*"
