@@ -1,36 +1,32 @@
-const express = require("express");
-const serverless = require("serverless-http");
-const cors = require("cors");
-const path = require("path");
+const express = require('express');
+const serverless = require('serverless-http');
+const admin = require('firebase-admin');
 
-// Configuración de rutas absolutas para desarrollo y producción
-let departamentoRoutes;
-try {
-  // Intenta cargar desde la ubicación de Netlify
-  departamentoRoutes = require("/var/task/Backend/routes/departamentoroutes");
-} catch (e) {
-  // Fallback para desarrollo local
-  departamentoRoutes = require(path.join(__dirname, "../../Backend/routes/departamentoroutes"));
+// Inicialización directa de Firebase (evita problemas de rutas)
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+    })
+  });
 }
+const db = admin.firestore();
 
 const app = express();
 
 // Middlewares esenciales
-app.use(cors());
+app.use(require('cors')());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Ruta base para Netlify Functions
-app.use("/", departamentoRoutes);
-
-// Manejador de errores mejorado
-app.use((err, req, res, next) => {
-  console.error("Error en la aplicación:", err.stack);
-  res.status(500).json({
-    success: false,
-    error: "Error interno del servidor",
-    details: process.env.NODE_ENV === "development" ? err.message : null
-  });
-});
-
-exports.handler = serverless(app);
+// Rutas directas (sin archivos externos)
+app.get('/', async (req, res) => {
+  try {
+    const doc = await db.collection("departamentos").doc("principal").get();
+    if (!doc.exists) {
+      return res.status(404).json({ error: "Documento no encontrado" });
+    }
+    res.json({ 
+      nombre: doc.data().nombre || null,
+      ultimaActualizacion: doc.data().updatedAt?.toDate().to
