@@ -1,7 +1,14 @@
 [build]
-functions = "netlify/functions" # Ruta a tus funciones
-publish = "." # Carpeta donde está tu frontend
+command = "npm install"
+functions = "netlify/functions"
+publish = "Frontend"  # Asegúrate que apunta a tu carpeta frontend
 
+[[redirects]]
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200
+
+# Esta redirección debe ir después de las de API
 [[redirects]]
 from = "/*"
 to = "/index.html"

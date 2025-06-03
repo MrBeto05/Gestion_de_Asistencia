@@ -1,31 +1,32 @@
+// URL base para todas las solicitudes
+const API_BASE = '/.netlify/functions/departamento';
+
 function editarDep() {
   const input = document.getElementById("nombre");
-  if (!input) {
-    alert("Error: Campo 'nombre' no encontrado en el HTML");
-    return;
-  }
-
   const nombre = input.value.trim();
+
   if (!nombre) {
     alert("Por favor ingrese un nombre válido");
     return;
   }
 
-  fetch('/.netlify/functions/departamento', {
+  fetch(API_BASE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nombre })
   })
-  .then(async (res) => {
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Error del servidor");
-    return data;
+  .then(response => {
+    if (!response.ok) {
+      return response.text().then(text => {
+        throw new Error(text || 'Error del servidor');
+      });
+    }
+    return response.json();
   })
   .then(data => {
-    alert(data.mensaje);
-    input.value = "";
-    // Actualiza el nombre mostrado después de modificarlo
+    alert(data.mensaje || "Departamento actualizado correctamente");
     document.getElementById("nomDep").textContent = nombre;
+    input.value = "";
   })
   .catch(err => {
     console.error("Error completo:", err);
@@ -34,10 +35,14 @@ function editarDep() {
 }
 
 function consultarDep() {
-  fetch('/.netlify/functions/departamento')
-    .then(res => {
-      if (!res.ok) throw new Error("No se pudo consultar el departamento");
-      return res.json();
+  fetch(API_BASE)
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => {
+          throw new Error(text || 'Error al consultar');
+        });
+      }
+      return response.json();
     })
     .then(data => {
       document.getElementById("nomDep").textContent = data.nombre || "No definido";
@@ -45,6 +50,7 @@ function consultarDep() {
     })
     .catch(err => {
       console.error("Error en consulta:", err);
+      document.getElementById("nomDep").textContent = "Error al cargar";
       alert("Error al consultar: " + err.message);
     });
 }

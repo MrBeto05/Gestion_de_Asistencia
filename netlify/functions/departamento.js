@@ -5,15 +5,23 @@ const departamentoRoutes = require("../../Backend/routes/departamentoroutes");
 
 const app = express();
 
-// Configuración de CORS
-app.use(cors({
-  origin: '*' // O especifica tu dominio frontend
-}));
-
+// Configuración esencial
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Usa '/' como ruta base en lugar de '/.netlify/functions/departamento'
-app.use('/', departamentoRoutes);
+// Ruta específica para la función Lambda
+app.use('/.netlify/functions/departamento', departamentoRoutes);
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Algo salió mal!' });
+});
+
+// Ruta raíz para testing
+app.get('/', (req, res) => {
+  res.json({ message: "API funcionando" });
+});
 
 exports.handler = serverless(app);
