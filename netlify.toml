@@ -1,14 +1,16 @@
 [build]
-command = "npm install"
+command = "npm install && npm run build"
 functions = "netlify/functions"
-publish = "."  # Asegúrate que apunta a tu carpeta frontend
+publish = "."
+
+[functions]
+node_bundler = "esbuild" # Mejor para manejar rutas
 
 [[redirects]]
 from = "/api/*"
 to = "/.netlify/functions/:splat"
 status = 200
 
-# Esta redirección debe ir después de las de API
 [[redirects]]
 from = "/*"
 to = "/index.html"

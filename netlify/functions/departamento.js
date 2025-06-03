@@ -3,43 +3,34 @@ const serverless = require("serverless-http");
 const cors = require("cors");
 const path = require("path");
 
-// Configura logging detallado
-const logger = {
-  info: (...args) => console.log('[INFO]', ...args),
-  error: (...args) => console.error('[ERROR]', ...args)
-};
-
-const departamentoRoutes = require(path.resolve(__dirname, "../../Backend/routes/departamentoroutes"));
+// Configuración de rutas absolutas para desarrollo y producción
+let departamentoRoutes;
+try {
+  // Intenta cargar desde la ubicación de Netlify
+  departamentoRoutes = require("/var/task/Backend/routes/departamentoroutes");
+} catch (e) {
+  // Fallback para desarrollo local
+  departamentoRoutes = require(path.join(__dirname, "../../Backend/routes/departamentoroutes"));
+}
 
 const app = express();
 
-// Middleware de logging
-app.use((req, res, next) => {
-  logger.info(`Recibida petición: ${req.method} ${req.path}`);
-  next();
-});
-
+// Middlewares esenciales
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/.netlify/functions/departamento", departamentoRoutes);
-
-// Ruta de salud
-app.get("/.netlify/functions/departamento/health", (req, res) => {
-  logger.info("Health check recibido");
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
-});
+// Ruta base para Netlify Functions
+app.use("/", departamentoRoutes);
 
 // Manejador de errores mejorado
 app.use((err, req, res, next) => {
-  logger.error("Error en la aplicación:", err.stack);
+  console.error("Error en la aplicación:", err.stack);
   res.status(500).json({
-    error: "Algo salió mal",
+    success: false,
+    error: "Error interno del servidor",
     details: process.env.NODE_ENV === "development" ? err.message : null
   });
 });
 
-exports.handler = serverless(app, {
-  callbackWaitsForEmptyEventLoop: false // Importante para Netlify
-});
+exports.handler = serverless(app);
