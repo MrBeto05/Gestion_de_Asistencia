@@ -24,6 +24,8 @@ function editarDep() {
   .then(data => {
     alert(data.mensaje);
     input.value = "";
+    // Actualiza el nombre mostrado después de modificarlo
+    document.getElementById("nomDep").textContent = nombre;
   })
   .catch(err => {
     console.error("Error completo:", err);
@@ -38,12 +40,14 @@ function consultarDep() {
       return res.json();
     })
     .then(data => {
-      // Actualiza ambos campos relevantes
-      document.getElementById("nombre").value = data.nombre || "";
       document.getElementById("nomDep").textContent = data.nombre || "No definido";
+      document.getElementById("nombre").value = data.nombre || "";
     })
     .catch(err => {
       console.error("Error en consulta:", err);
       alert("Error al consultar: " + err.message);
     });
 }
+
+// Consultar automáticamente al cargar la página
+document.addEventListener('DOMContentLoaded', consultarDep);
