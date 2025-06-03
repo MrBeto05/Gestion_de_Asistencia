@@ -1,10 +1,8 @@
-// Obtener asignaturas desde localStorage
 function obtenerAsignaturas() {
   const data = localStorage.getItem("asignaturas");
   return data ? JSON.parse(data) : [];
 }
 
-// Guardar asignaturas en localStorage
 function guardarAsignaturas(asignaturas) {
   localStorage.setItem("asignaturas", JSON.stringify(asignaturas));
 }

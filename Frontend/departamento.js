@@ -14,7 +14,7 @@ function editarDep() {
   fetch('/.netlify/functions/departamento', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre }) // Asegúrate que sea { nombre: valor }
+    body: JSON.stringify({ nombre })
   })
   .then(async (res) => {
     const data = await res.json();
@@ -23,7 +23,7 @@ function editarDep() {
   })
   .then(data => {
     alert(data.mensaje);
-    input.value = ""; // Limpia el campo
+    input.value = "";
   })
   .catch(err => {
     console.error("Error completo:", err);

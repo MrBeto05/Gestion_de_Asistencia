@@ -88,7 +88,6 @@ function modificarAsistencia(event) {
   if (lista) {
     const estudiante = lista.estudiantes.find(e => e.numDoc === numDoc && e.tipoDoc === tipoDoc);
     if (estudiante) {
-      // Aquí iría la lógica para modificar el estado de asistencia
       alert("Asistencia modificada correctamente");
     } else {
       alert("Estudiante no encontrado en la lista");
