@@ -38,9 +38,12 @@ function consultarDep() {
       return res.json();
     })
     .then(data => {
+      // Actualiza ambos campos relevantes
       document.getElementById("nombre").value = data.nombre || "";
+      document.getElementById("nomDep").textContent = data.nombre || "No definido";
     })
     .catch(err => {
+      console.error("Error en consulta:", err);
       alert("Error al consultar: " + err.message);
     });
 }
